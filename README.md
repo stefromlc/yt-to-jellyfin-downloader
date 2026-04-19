@@ -1,25 +1,75 @@
-📥 YouTube → Media Library Downloader
+# 📥 YouTube → Media Library Downloader
 
-A Python tool that downloads YouTube videos (channels, playlists, or single videos) and automatically converts them into a TV-style media library—complete with metadata and artwork for use in Jellyfin or Kodi.
+A Python tool that downloads YouTube videos (channels, playlists, or single videos) and automatically converts them into a clean, TV-style media library—complete with metadata and artwork for use in **Jellyfin** or **Kodi**.
 
-✨ Features
-📺 Download:
-Full channels (latest uploads)
-Playlists (with optional limits)
-Single videos
+---
 
-⚙️ Powered by yt-dlp
+## 🗂️ Recommended Media Folder Layout
 
-🗂️ Automatically organizes content into:
-Channel folders
-Season/Episode structure
+To keep your media library clean and avoid mixing YouTube content with movies and TV shows, use a structured folder setup like this:
 
-📝 Generates .nfo metadata files (Jellyfin/Kodi compatible)
-🖼️ Downloads thumbnails as poster + fanart
-🚫 Skips already downloaded videos (archive tracking)
-🧵 Background worker queue for staged downloads
-📁 Example Output
-Media/
+```
+M:\Media
+│
+├── Movies
+├── TV
+└── YouTube
+    ├── ChannelName
+    │   └── Season 01
+    │       ├── Video Title 1.mp4
+    │       ├── Video Title 1.nfo
+    │       ├── Video Title 1-poster.jpg
+    │       ├── Video Title 1-fanart.jpg
+    │       └── ...
+    ├── AnotherChannel
+    └── Playlists
+```
+
+This ensures:
+
+* YouTube content is isolated from films/TV
+* Easy scanning by Jellyfin/Kodi
+* Cleaner metadata management
+
+---
+
+## ✨ Features
+
+📺 **Download options**
+
+* Full channels (latest uploads)
+* Playlists (with optional limits)
+* Single videos
+
+⚙️ **Powered by** `yt-dlp`
+
+🗂️ **Automatic TV-style organisation**
+
+* Channel folders
+* Season/Episode structure
+
+📝 **Metadata support**
+
+* Generates `.nfo` files (Jellyfin/Kodi compatible)
+
+🖼️ **Artwork handling**
+
+* Downloads thumbnails as poster + fanart
+
+🚫 **Smart skipping**
+
+* Avoids re-downloading existing videos (archive tracking)
+
+🧵 **Staged queue system**
+
+* Queue multiple downloads before running
+
+---
+
+## 📁 Example Output Structure
+
+```
+YouTube/
 └── ChannelName/
     ├── tvshow.nfo
     └── Season 01/
@@ -28,80 +78,137 @@ Media/
         ├── Video Title 1-poster.jpg
         ├── Video Title 1-fanart.jpg
         └── ...
-        
-🚀 Quick Start
-1. Install dependency
-pip install yt-dlp
+```
 
-2. Configure the script
-Update these values:
-BASE_DIR = r"YOUR_MEDIA_FOLDER"
+---
+
+## 🚀 Quick Start
+
+### 1. Install dependency
+
+```
+pip install yt-dlp
+```
+
+---
+
+### 2. Configure the script
+
+Update these values in your script:
+
+```
+BASE_DIR = r"M:\Media\YouTube"
 COOKIE_FILE = r"PATH_TO_YOUR_COOKIES.txt"
 SEASON_NAME = "Season 01"
+```
 
-3. Run it
+---
+
+### 3. Run it
+
+```
 python your_script.py
+```
 
-🧠 How It Works
-Paste a YouTube URL (video, playlist, or channel)
-Stage multiple downloads
-Run go
+---
 
-The script:
-Downloads videos using yt-dlp
-Extracts metadata
-Renames and moves files into a TV-style structure
-Generates .nfo files + artwork
-Cleans up temp folders automatically
+## 🧠 How It Works
 
-💡 Commands
-go → start downloads
-clear → clear staged jobs
-q → quit
+1. Paste a YouTube URL (video, playlist, or channel)
+2. Stage multiple downloads
+3. Run `go`
 
-🔧 Configuration Notes
-BASE_DIR → where your media library lives
-COOKIE_FILE → optional but recommended for restricted/private videos
-SEASON_NAME → change if you want different season naming
+The script then:
 
-🧩 Customisation Ideas
-Add multiple download threads
-Change naming conventions
-Split content into multiple seasons
-Add a GUI or web interface
-Replace hardcoded config with a config file
+* Downloads videos using `yt-dlp`
+* Extracts metadata
+* Renames & organises files into TV-style structure
+* Generates `.nfo` files + artwork
+* Cleans up temporary files automatically
 
-⚠️ Limitations
-Single-season structure by default
-Episode numbering is sequential
-CLI only (no GUI yet)
+---
 
-📌 Use Cases
-Build a personal YouTube-on-Plex library
-Archive favourite creators
-Offline viewing
-Organise long-form content like TV shows
+## 💡 Commands
 
-🔐 Generating a cookies.txt File (Optional)
-Some videos (age-restricted, private, or members-only) require authentication. You can provide your YouTube cookies to yt-dlp to enable this.
+```
+go      → start downloads
+clear   → clear staged jobs
+q       → quit
+```
 
-🧩 Steps
-Install the Get cookies.txt LOCALLY extension:
-Available for Chrome and Firefox
-Open a private/incognito window
-Sign in to your YouTube account
+---
 
-In the same tab, go to:
+## 🔧 Configuration Notes
+
+* `BASE_DIR` → Root of your media library (recommended: `M:\Media\YouTube`)
+* `COOKIE_FILE` → Optional but recommended for restricted/private videos
+* `SEASON_NAME` → Change if you want different season naming
+
+---
+
+## 🧩 Customisation Ideas
+
+* Add multi-threaded downloads
+* Change naming conventions
+* Split content into multiple seasons per channel
+* Add GUI or web interface
+* Replace hardcoded config with JSON/YAML config file
+
+---
+
+## ⚠️ Limitations
+
+* Single-season structure by default
+* Episode numbering is sequential
+* CLI-only (no GUI yet)
+
+---
+
+## 📌 Use Cases
+
+* Build a personal YouTube-on-Jellyfin/Plex library
+* Archive favourite creators
+* Offline viewing
+* Organise long-form YouTube content like TV shows
+
+---
+
+## 🔐 Optional: cookies.txt Setup
+
+For age-restricted, private, or members-only content:
+
+### Steps
+
+1. Install browser extension:
+
+   * “Get cookies.txt (LOCALLY)” for Chrome/Firefox
+
+2. Open an incognito/private window
+
+3. Sign in to YouTube
+
+4. Visit:
+
+```
 https://www.youtube.com/robots.txt
+```
 
-Click the extension icon:
-Set Export Format → Netscape
+5. Click extension → Export as **Netscape format**
 
-Click Export As
-Save the file somewhere safe, e.g.:
+6. Save file:
+
+```
 C:\path\to\cookies.txt
-Update your script:
-COOKIE_FILE = r"C:\path\to\cookies.txt"
+```
 
-⚖️ Disclaimer
-For personal use only. Please respect YouTube’s terms of service and content creators.
+7. Update script:
+
+```
+COOKIE_FILE = r"C:\path\to\cookies.txt"
+```
+
+---
+
+## ⚖️ Disclaimer
+
+This tool is intended for **personal use only**. Please respect YouTube’s Terms of Service and content creators’ rights.
