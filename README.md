@@ -146,24 +146,6 @@ q       → quit
 
 ---
 
-## 🧩 Customisation Ideas
-
-* Add multi-threaded downloads
-* Change naming conventions
-* Split content into multiple seasons per channel
-* Add GUI or web interface
-* Replace hardcoded config with JSON/YAML config file
-
----
-
-## ⚠️ Limitations
-
-* Single-season structure by default
-* Episode numbering is sequential
-* CLI-only (no GUI yet)
-
----
-
 ## 📌 Use Cases
 
 * Build a personal YouTube-on-Jellyfin/Plex library
